@@ -29,5 +29,20 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    /*
+    buat nambah image capture terhadap pembuatan resep makanan dibawahnya hanya untuk library tambahan
+
+    easy image untuk mengambil gambar dari camera dan gallery
+    butterknife untuk permission
+    picasso untuk memasang hasil pengembalianke imageview
+    base64image untuk menganti dari image ke base64 dan sebaliknya
+
+     */
+    compile 'com.github.jkwiecien:EasyImage:1.3.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.nekoloop:Base64Image:0.1.0'
+
+
     testCompile 'junit:junit:4.12'
 }

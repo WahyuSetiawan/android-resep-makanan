@@ -105,4 +105,18 @@
     <string name="minuman">Minuman</string>
     <string name="kue">kue</string>
     <string name="put_extra_kategori">put_extra_kategori</string>
+    <string name="database_resep_judul">judul</string>
+    <string name="database_resep_gambar">gambar</string>
+    <string name="database_resep_alat">alat</string>
+    <string name="database_resep_bahan">bahan</string>
+    <string name="database_resep_langkah">langkah</string>
+    <string name="database_resep_kategori">kategori</string>
+    <string name="database_resep_table">resep</string>
+    <string name="database_resep_id">id</string>
+    <string name="database_resep_favorite">favorite</string>
+    <string-array name="spinner_kategori_tambah_resep">
+        <item>Makanan</item>
+        <item>Minuman</item>
+        <item>Kue</item>
+    </string-array>
 </resources>
