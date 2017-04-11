@@ -114,6 +114,9 @@
     <string name="database_resep_table">resep</string>
     <string name="database_resep_id">id</string>
     <string name="database_resep_favorite">favorite</string>
+    <string name="put_extra_detail">android_detail_id</string>
+    <string name="action_detail_edit">Ubah</string>
+    <string name="action_detail_delete">Hapus</string>
     <string-array name="spinner_kategori_tambah_resep">
         <item>Makanan</item>
         <item>Minuman</item>

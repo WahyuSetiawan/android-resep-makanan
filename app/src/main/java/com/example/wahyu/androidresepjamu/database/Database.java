@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 
 public abstract class Database extends SQLiteOpenHelper {
-    static final int DATABASE_VERSION = 3;
+    static final int DATABASE_VERSION = 5;
     static final String DATABASE_NAME = "databaseresepmakanan";
 
     public Database(Context context) {

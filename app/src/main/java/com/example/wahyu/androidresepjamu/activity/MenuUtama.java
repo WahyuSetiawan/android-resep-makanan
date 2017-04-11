@@ -1,9 +1,9 @@
 package com.example.wahyu.androidresepjamu.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,19 +13,76 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.example.wahyu.androidresepjamu.R;
+import com.example.wahyu.androidresepjamu.database.MakananOpenHelper;
+import com.example.wahyu.androidresepjamu.model.Kategori;
+import com.example.wahyu.androidresepjamu.model.Makanan;
+import com.nekoloop.base64image.Base64Image;
+import com.nekoloop.base64image.RequestDecode;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
+
+import java.util.ArrayList;
 
 public class MenuUtama extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Toolbar mToolbar;
+    private CarouselView mCarouselView;
+
+    private MakananOpenHelper mMakananOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_utama);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        setupToolbar();
+
+        setupFloating();
+
+        setupNavigation();
+
+        setupComponent();
+
+        setupDatabase();
+
+        setupData();
+    }
+
+    private void setupComponent() {
+        mCarouselView = (CarouselView) findViewById(R.id.carousel_menu_utama);
+    }
+
+    private void setupData() {
+        final ArrayList<Makanan> mMakanans = mMakananOpenHelper.selectAllFavorite();
+
+        mCarouselView.setPageCount(mMakanans.size());
+        mCarouselView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, final ImageView imageView) {
+                Base64Image
+                        .with(MenuUtama.this)
+                        .decode(mMakanans.get(position).getGambar())
+                        .into(new RequestDecode.Decode() {
+                            @Override
+                            public void onSuccess(Bitmap bitmap) {
+                                imageView.setImageBitmap(bitmap);
+                            }
+
+                            @Override
+                            public void onFailure() {
+
+                            }
+                        });
+
+            }
+        });
+    }
+
+    private void setupFloating() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,26 +91,28 @@ public class MenuUtama extends AppCompatActivity
                 MenuUtama.this.startActivity(inttambahmakanan);
             }
         });
+    }
 
+    private void setupNavigation() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        setupToolbar();
-
-        setupDatabase();
     }
 
     private void setupDatabase() {
-
+        mMakananOpenHelper = new MakananOpenHelper(this);
     }
 
     private void setupToolbar() {
         setTitle("Menu Utama");
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -76,7 +135,7 @@ public class MenuUtama extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_edit) {
             return true;
         }
 
@@ -93,17 +152,17 @@ public class MenuUtama extends AppCompatActivity
         } else if (id == R.id.nav_makanan) {
             Intent intMakanan = new Intent(this, DaftarMakanan.class);
 
-            intMakanan.putExtra(getString(R.string.put_extra_kategori),getString(R.string.put_extra_makanan_data));
+            intMakanan.putExtra(getString(R.string.put_extra_kategori), Kategori.MAKANAN.toString());
             this.startActivity(intMakanan);
         } else if (id == R.id.nav_minuman) {
             Intent intMinuman = new Intent(this, DaftarMakanan.class);
 
-            intMinuman.putExtra(getString(R.string.put_extra_kategori),getString(R.string.put_extra_minuman_data));
+            intMinuman.putExtra(getString(R.string.put_extra_kategori), Kategori.MINUMAN.toString());
             this.startActivity(intMinuman);
         } else if (id == R.id.nav_kue) {
             Intent intKue = new Intent(this, DaftarMakanan.class);
 
-            intKue.putExtra(getString(R.string.put_extra_kategori),getString(R.string.put_extra_kue_data));
+            intKue.putExtra(getString(R.string.put_extra_kategori), Kategori.KUE.toString());
             this.startActivity(intKue);
         } else if (id == R.id.nav_share) {
 

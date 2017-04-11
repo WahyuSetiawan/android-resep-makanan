@@ -85,12 +85,14 @@ public class TambahMakanan extends AppCompatActivity {
                                           if (validation()) {
                                               if (mDatabaseMakanan.insert(
                                                       new Makanan(
+                                                              0,
                                                               mTextJudulResep.getText().toString(),
                                                               returnbase64imagestring,
                                                               mTextAlat.getText().toString(),
                                                               mTextBahan.getText().toString(),
                                                               mTextCara.getText().toString(),
-                                                              Kategori.valueOf(mSpinnerKategori.getSelectedItem().toString().toUpperCase())
+                                                              Kategori.valueOf(mSpinnerKategori.getSelectedItem().toString().toUpperCase()),
+                                                              0
                                                       )
                                               )) {
                                                   Toast.makeText(TambahMakanan.this, "Data resep makanan telah tersimpan", Toast.LENGTH_SHORT).show();

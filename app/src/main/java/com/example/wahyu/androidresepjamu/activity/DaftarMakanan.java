@@ -5,15 +5,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.adapter.AdapterDetailMakanan;
-import com.example.wahyu.androidresepjamu.database.Database;
+import com.example.wahyu.androidresepjamu.adapter.AdapterDaftarMakanan;
 import com.example.wahyu.androidresepjamu.database.MakananOpenHelper;
+import com.example.wahyu.androidresepjamu.model.Kategori;
+import com.example.wahyu.androidresepjamu.model.Makanan;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 import static com.example.wahyu.androidresepjamu.R.id.recycler_daftar_makanan;
 import static com.example.wahyu.androidresepjamu.R.id.text_notifikasi;
@@ -22,9 +23,9 @@ public class DaftarMakanan extends AppCompatActivity {
     private RecyclerView mRecyclerMakanan;
     private TextView mTextNotifikasi;
 
-    private Database database;
+    private AdapterDaftarMakanan mAdapterRecycler;
 
-    private AdapterDetailMakanan mAdapterRecycler;
+    private MakananOpenHelper mMakananOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,47 +38,70 @@ public class DaftarMakanan extends AppCompatActivity {
 
         setupComponent();
 
+        setupAdapter();
+
         setupData();
     }
 
-    private void setupData() {
-        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(getString(R.string.put_extra_makanan_data))) {
-            setTitle(getString(R.string.makanan));
-            mTextNotifikasi.setText("Tidak tedapat data makanan");
-        }
-
-        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(getString(R.string.put_extra_minuman_data))) {
-            setTitle(getString(R.string.minuman));
-            mTextNotifikasi.setText("Tidak terdapat data minuman");
-        }
-
-        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(getString(R.string.put_extra_kue_data))) {
-            setTitle(getString(R.string.kue));
-            mTextNotifikasi.setText("Tidak terdapat data kue");
-        }
-    }
-
-    private void setupComponent() {
-        mRecyclerMakanan = (RecyclerView) findViewById(recycler_daftar_makanan);
-
-        mTextNotifikasi = (TextView) findViewById(text_notifikasi);
-
+    private void setupAdapter() {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mAdapterRecycler = new AdapterDetailMakanan();
+        mAdapterRecycler = new AdapterDaftarMakanan(this);
 
         mRecyclerMakanan.setLayoutManager(mLinearLayoutManager);
         mRecyclerMakanan.setAdapter(mAdapterRecycler);
     }
 
+    private void setupData() {
+        ArrayList<Makanan> mListMakanan = null;
+        String keterangan = "";
+        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(Kategori.MAKANAN.toString())) {
+            setTitle(getString(R.string.makanan));
+
+            mListMakanan = mMakananOpenHelper.selectAllFromKategori(Kategori.MAKANAN.toString());
+
+            keterangan = "Tidak tedapat data makanan";
+        }
+
+        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(Kategori.MINUMAN.toString())) {
+            setTitle(getString(R.string.minuman));
+            keterangan = "Tidak terdapat data minuman";
+
+            mListMakanan = mMakananOpenHelper.selectAllFromKategori(Kategori.MINUMAN.toString());
+        }
+
+        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)).equals(Kategori.KUE.toString())) {
+            setTitle(getString(R.string.kue));
+            keterangan = "Tidak terdapat data kue";
+
+            mListMakanan = mMakananOpenHelper.selectAllFromKategori(Kategori.KUE.toString());
+        }
+
+        if (mListMakanan.size() == 0) {
+            mTextNotifikasi.setVisibility(View.VISIBLE);
+            mRecyclerMakanan.setVisibility(View.GONE);
+            mTextNotifikasi.setText(keterangan);
+        } else {
+            mRecyclerMakanan.setVisibility(View.VISIBLE);
+            mTextNotifikasi.setVisibility(View.GONE);
+        }
+
+        mAdapterRecycler.setMakanans(mListMakanan);
+        mAdapterRecycler.notifyDataSetChanged();
+    }
+
+    private void setupComponent() {
+        mRecyclerMakanan = (RecyclerView) findViewById(recycler_daftar_makanan);
+        mTextNotifikasi = (TextView) findViewById(text_notifikasi);
+    }
+
     private void setupDatabase() {
-        database = new MakananOpenHelper(this);
+        mMakananOpenHelper = new MakananOpenHelper(this);
 
     }
 
     private void setupToolbar() {
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
