@@ -25,6 +25,17 @@ public class Makanan {
         this.favorite = favorite;
     }
 
+    public Makanan(String nama, String gambar, String alat, String bahan, String langkah, Kategori kategori) {
+        this.id = id;
+        this.nama = nama;
+        this.gambar = gambar;
+        this.langkah = langkah;
+        this.alat = alat;
+        this.bahan = bahan;
+        this.kategori = kategori;
+        this.favorite = 0;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,5 +66,13 @@ public class Makanan {
 
     public int getFavorite() {
         return favorite;
+    }
+
+    public void changeFavorite() {
+        if (favorite == 0) {
+            favorite = 1;
+        } else {
+            favorite = 0;
+        }
     }
 }

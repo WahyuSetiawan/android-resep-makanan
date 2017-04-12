@@ -12,21 +12,22 @@
         <activity
             android:name=".activity.MenuUtama"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.DetailMakanan"
+            android:label="@string/title_activity_detail_makanan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.DaftarMakanan" />
+        <activity android:name=".activity.SplashScreen" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.DetailMakanan"
-            android:label="@string/title_activity_detail_makanan"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.DaftarMakanan" />
-        <activity android:name=".activity.SplashScreen" />
         <activity android:name=".activity.JenisMakanan" />
-        <activity android:name=".activity.TambahMakanan"></activity>
+        <activity android:name=".activity.TambahMakanan" />
+        <activity android:name=".activity.Info"></activity>
     </application>
 
 </manifest>

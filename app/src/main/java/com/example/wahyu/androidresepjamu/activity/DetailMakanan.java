@@ -1,9 +1,13 @@
 package com.example.wahyu.androidresepjamu.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wahyu.androidresepjamu.R;
 import com.example.wahyu.androidresepjamu.database.MakananOpenHelper;
@@ -30,6 +33,8 @@ public class DetailMakanan extends AppCompatActivity {
 
     private MakananOpenHelper mMakananOpenHelper;
     private Makanan mMakanan;
+    private int position;
+    private CoordinatorLayout mCoordinatorLayout;
 
 
     @Override
@@ -51,6 +56,7 @@ public class DetailMakanan extends AppCompatActivity {
 
     private void setupData() {
         mMakanan = mMakananOpenHelper.select(getIntent().getStringExtra(getString(R.string.put_extra_detail)));
+        position = getIntent().getIntExtra(getString(R.string.put_extra_detail_postition), 0);
 
         setTitle(mMakanan.getNama());
 
@@ -80,17 +86,44 @@ public class DetailMakanan extends AppCompatActivity {
         mFloathingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mMakanan.changeFavorite();
+
+                if (mMakananOpenHelper.edit(mMakanan)) {
+                    mMakanan = mMakananOpenHelper.select(String.valueOf(mMakanan.getId()));
+
+                    if (mMakanan.getFavorite() > 0) {
+                        Snackbar.make(view, "Resep Favorite", Snackbar.LENGTH_LONG)
+                                .setAction("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        returnEdit();
+                                    }
+                                })
+                                .show();
+                    } else {
+                        Snackbar.make(view, "Menghilangkan favorite dari resep", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                } else {
+                    Snackbar.make(view, "Gagal mengubah favorite", Snackbar.LENGTH_SHORT)
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    returnEdit();
+                                }
+                            })
+                            .show();
+                }
             }
         });
     }
 
     private void setupComponent() {
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
         mTextNamaResep = (TextView) findViewById(R.id.text_nama_resep);
         mTextAlat = (TextView) findViewById(R.id.text_alat);
         mTextBahan = (TextView) findViewById(R.id.text_bahan_makanan);
-        mTextLangkah = (TextView) findViewById(R.id.text_bahan_makanan);
+        mTextLangkah = (TextView) findViewById(R.id.text_langkah_memasak);
         mImageTitle = (ImageView) findViewById(R.id.image_detail);
     }
 
@@ -106,16 +139,61 @@ public class DetailMakanan extends AppCompatActivity {
 
 
     private void hapus() {
-        Snackbar.make(this.mFloathingButton, "", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pemberitahuan");
+        builder.setMessage("Yakin hapus resep ini ?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mMakananOpenHelper.delete(String.valueOf(mMakanan.getId()))) {
+                    Snackbar.make(mImageTitle, "Resep Telah Terhapus", Snackbar.LENGTH_LONG)
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                            .show();
+                    returnDelete();
+                } else {
+                    Snackbar.make(mImageTitle, "Resep Gagal Terhapus", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void edit() {
-        Snackbar.make(this.mFloathingButton, "", Snackbar.LENGTH_LONG).show();
+        Intent mIntentEdit = new Intent(DetailMakanan.this, TambahMakanan.class);
+        mIntentEdit.putExtra(getString(R.string.put_extra_tambah_makanan), getString(R.string.put_extra_tambah_makanan_edit));
+        mIntentEdit.putExtra(getString(R.string.put_extra_tambah_makanan_id), String.valueOf(mMakanan.getId()));
+        startActivityForResult(mIntentEdit, getResources().getInteger(R.integer.form_makanan));
+    }
+
+    private void returnEdit() {
+        Intent data = new Intent();
+        data.putExtra(getString(R.string.put_extra_detail_postition), String.valueOf(DetailMakanan.this.position));
+        data.putExtra(getString(R.string.put_extra_detail), String.valueOf(mMakanan.getId()));
+        setResult(getResources().getInteger(R.integer.return_edit_data), data);
+        finish();
+    }
+
+    private void returnDelete() {
+        Intent data = new Intent();
+        data.putExtra(getString(R.string.put_extra_detail_postition), String.valueOf(DetailMakanan.this.position));
+        setResult(getResources().getInteger(R.integer.return_delete_data), data);
+        finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_detail_makanan, menu);
         return true;
@@ -125,7 +203,7 @@ public class DetailMakanan extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                returnEdit();
                 break;
             case R.id.action_edit:
                 edit();
@@ -138,4 +216,16 @@ public class DetailMakanan extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == getResources().getInteger(R.integer.form_makanan)) {
+            if (resultCode == RESULT_OK) {
+                Snackbar.make(mCoordinatorLayout, "Data berhasil terubah", Snackbar.LENGTH_SHORT).show();
+                setupData();
+            }
+        }
+
+    }
 }

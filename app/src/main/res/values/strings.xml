@@ -117,9 +117,14 @@
     <string name="put_extra_detail">android_detail_id</string>
     <string name="action_detail_edit">Ubah</string>
     <string name="action_detail_delete">Hapus</string>
+    <string name="put_extra_detail_postition">android_position</string>
+    <string name="put_extra_tambah_makanan">extra_makanan</string>
+    <string name="put_extra_tambah_makanan_edit">tambahmakananedit</string>
+    <string name="put_extra_tambah_makanan_id">extra_makanan_id</string>
+    <string name="put_extra_status">status</string>
     <string-array name="spinner_kategori_tambah_resep">
-        <item>Makanan</item>
-        <item>Minuman</item>
-        <item>Kue</item>
+        <item>MAKANAN</item>
+        <item>MINUMAN</item>
+        <item>KUE</item>
     </string-array>
 </resources>

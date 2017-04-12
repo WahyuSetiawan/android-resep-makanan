@@ -3,7 +3,9 @@ package com.example.wahyu.androidresepjamu.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.wahyu.androidresepjamu.R;
@@ -22,6 +25,7 @@ import com.example.wahyu.androidresepjamu.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;
 import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
@@ -31,6 +35,8 @@ public class MenuUtama extends AppCompatActivity
 
     private Toolbar mToolbar;
     private CarouselView mCarouselView;
+    private Button mButtonMenu, mButtonInfo;
+    private CoordinatorLayout mCoordinatorLayout;
 
     private MakananOpenHelper mMakananOpenHelper;
 
@@ -54,9 +60,15 @@ public class MenuUtama extends AppCompatActivity
 
     private void setupComponent() {
         mCarouselView = (CarouselView) findViewById(R.id.carousel_menu_utama);
+
+        mButtonMenu = (Button) findViewById(R.id.menu_utama_menu);
+        mButtonInfo = (Button) findViewById(R.id.menu_utama_info);
     }
 
     private void setupData() {
+        mButtonInfo.setOnClickListener(mListenerInfo);
+        mButtonMenu.setOnClickListener(mListenerMenu);
+
         final ArrayList<Makanan> mMakanans = mMakananOpenHelper.selectAllFavorite();
 
         mCarouselView.setPageCount(mMakanans.size());
@@ -77,7 +89,15 @@ public class MenuUtama extends AppCompatActivity
 
                             }
                         });
+            }
+        });
 
+        mCarouselView.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intDetailOpen = new Intent(MenuUtama.this, DetailMakanan.class);
+                intDetailOpen.putExtra(getString(R.string.put_extra_detail), String.valueOf(mMakanans.get(position).getId()));
+                MenuUtama.this.startActivityForResult(intDetailOpen, getResources().getInteger(R.integer.detail_open));
             }
         });
     }
@@ -114,6 +134,21 @@ public class MenuUtama extends AppCompatActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
     }
+
+    private View.OnClickListener mListenerMenu = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MenuUtama.this , JenisMakanan.class);
+            startActivityForResult(intent, getResources().getInteger(R.integer.jenis_makanan));
+        }
+    };
+    private View.OnClickListener mListenerInfo = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MenuUtama.this , Info.class);
+            startActivityForResult(intent, getResources().getInteger(R.integer.info));
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -153,17 +188,17 @@ public class MenuUtama extends AppCompatActivity
             Intent intMakanan = new Intent(this, DaftarMakanan.class);
 
             intMakanan.putExtra(getString(R.string.put_extra_kategori), Kategori.MAKANAN.toString());
-            this.startActivity(intMakanan);
+            this.startActivityForResult(intMakanan, getResources().getInteger(R.integer.return_menu_utama_data));
         } else if (id == R.id.nav_minuman) {
             Intent intMinuman = new Intent(this, DaftarMakanan.class);
 
             intMinuman.putExtra(getString(R.string.put_extra_kategori), Kategori.MINUMAN.toString());
-            this.startActivity(intMinuman);
+            this.startActivityForResult(intMinuman, getResources().getInteger(R.integer.return_menu_utama_data));
         } else if (id == R.id.nav_kue) {
             Intent intKue = new Intent(this, DaftarMakanan.class);
 
             intKue.putExtra(getString(R.string.put_extra_kategori), Kategori.KUE.toString());
-            this.startActivity(intKue);
+            this.startActivityForResult(intKue, getResources().getInteger(R.integer.return_menu_utama_data));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -173,5 +208,14 @@ public class MenuUtama extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == getResources().getInteger(R.integer.return_menu_utama_data)) {
+            setupData();
+        }
     }
 }

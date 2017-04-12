@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="return_delete_data">455</integer>
+    <integer name="detail_open">333</integer>
+    <integer name="return_edit_data">565</integer>
+    <integer name="return_menu_utama_data">412</integer>
+    <integer name="form_makanan">744</integer>
+    <integer name="ok">10</integer>
+    <integer name="jenis_makanan">324</integer>
+    <integer name="daftar_makanan">566</integer>
+    <integer name="info">326</integer>
+</resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wahyu.androidresepjamu.R;
+import com.example.wahyu.androidresepjamu.model.Kategori;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,8 @@ import java.util.ArrayList;
  */
 
 public class AdapterJenisMakanan extends RecyclerView.Adapter<AdapterJenisMakanan.ViewHolder> {
-    private ArrayList<JenisMakanan> jenisMakanans = new ArrayList<>();
-
     public AdapterJenisMakanan() {
-        jenisMakanans.add(new JenisMakanan(0, "Minuman"));
-        jenisMakanans.add(new JenisMakanan(0, "Makanan"));
-        jenisMakanans.add(new JenisMakanan(0, "Kue"));
+
     }
 
     @Override
@@ -32,14 +29,12 @@ public class AdapterJenisMakanan extends RecyclerView.Adapter<AdapterJenisMakana
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        JenisMakanan jenisMakanan = jenisMakanans.get(position);
-
-        holder.title.setText(jenisMakanan.getTitle());
+        holder.title.setText(Kategori.values()[position].toString());
     }
 
     @Override
     public int getItemCount() {
-        return jenisMakanans.size();
+        return Kategori.values().length;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

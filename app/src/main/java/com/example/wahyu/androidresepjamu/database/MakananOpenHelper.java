@@ -114,7 +114,7 @@ public class MakananOpenHelper extends Database {
                         context.getString(R.string.database_resep_langkah),
                         context.getString(R.string.database_resep_kategori),
                         context.getString(R.string.database_resep_favorite)
-                }, null, null, null, null, null);
+                }, context.getString(R.string.database_resep_id) + " = "+ id, null, null, null, null);
 
         if (alldata != null) {
             alldata.moveToFirst();
