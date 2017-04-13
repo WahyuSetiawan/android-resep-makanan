@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.wahyu.androidresepjamu.activity.MenuUtama"
+    tools:context=".activity.MenuUtama"
     tools:showIn="@layout/content_activity_menu_utama">
 
     <ScrollView
@@ -18,16 +18,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/carousel_menu_utama"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="10 Daftar Favorite Resep Makanan"
+                android:textSize="20dp" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                app:fillColor="@color/colorAccent"
-                app:pageColor="@color/colorPrimary"
-                app:radius="6dp"
-                app:slideInterval="3000"
-                app:strokeColor="@color/colorPrimaryDark"
-                app:strokeWidth="1dp"/>
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Tidak terdapat resep favorite" />
+
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/carousel_menu_utama"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:fillColor="@color/colorAccent"
+                    app:pageColor="@color/colorPrimary"
+                    app:radius="6dp"
+                    app:slideInterval="3000"
+                    app:strokeColor="@color/colorPrimaryDark"
+                    app:strokeWidth="1dp" />
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

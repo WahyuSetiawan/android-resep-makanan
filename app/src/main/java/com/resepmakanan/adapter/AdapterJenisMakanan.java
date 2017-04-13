@@ -1,6 +1,5 @@
-package com.example.wahyu.androidresepjamu.adapter;
+package com.resepmakanan.adapter;
 
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.model.Kategori;
+import com.resepmakanan.R;
+import com.resepmakanan.model.Kategori;
 
-import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by wahyu on 4/8/2017.
@@ -29,7 +28,7 @@ public class AdapterJenisMakanan extends RecyclerView.Adapter<AdapterJenisMakana
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(Kategori.values()[position].toString());
+        holder.title.setText(StringUtils.capitalize(Kategori.values()[position].toString()));
     }
 
     @Override

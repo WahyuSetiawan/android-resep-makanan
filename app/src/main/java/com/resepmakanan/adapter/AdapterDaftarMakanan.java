@@ -1,22 +1,21 @@
-package com.example.wahyu.androidresepjamu.adapter;
+package com.resepmakanan.adapter;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.activity.DetailMakanan;
-import com.example.wahyu.androidresepjamu.model.Makanan;
+import com.resepmakanan.R;
+import com.resepmakanan.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -51,12 +50,12 @@ public class AdapterDaftarMakanan extends RecyclerView.Adapter<AdapterDaftarMaka
             @Override
             public void onSuccess(Bitmap bitmap) {
                 holder.image.setImageBitmap(bitmap);
-                holder.title.setText(makanan.getNama());
-                holder.description.setText(makanan.getKategori().toString());
+                holder.title.setText(StringUtils.capitalize(makanan.getNama()));
+                holder.description.setText(StringUtils.capitalize(makanan.getKategori().toString()));
 
-                if (makanan.getFavorite() > 0){
+                if (makanan.getFavorite() > 0) {
                     holder.favorite.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     holder.favorite.setVisibility(View.GONE);
                 }
             }

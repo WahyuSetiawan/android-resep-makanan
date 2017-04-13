@@ -4,66 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wahyu.androidresepjamu.activity.Info">
+    tools:context=".activity.Info">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_centerInParent="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/gambar"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/refrigerator" />
-
-            <TextView
-                android:id="@+id/nama"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/gambar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:text="Catatan Dapur"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nama"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Aplikasi Pencatat Resep Makanan"
-                android:textSize="15dp" />
+                <ImageView
+                    android:id="@+id/gambar"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/refrigerator" />
 
-            <TextView
-                android:id="@+id/version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/description"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:text="Version 1.0"
-                android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/nama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gambar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/back"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/version"
-                android:layout_centerHorizontal="true"
-                android:text="Back"
-                android:textSize="20dp" />
-        </RelativeLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nama"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/description"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/back"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/version"
+                    android:layout_centerHorizontal="true"
+                    android:text="Back"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.example.wahyu.androidresepjamu.activity;
+package com.resepmakanan.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.adapter.AdapterJenisMakanan;
-import com.example.wahyu.androidresepjamu.model.Kategori;
-import com.example.wahyu.androidresepjamu.other.RecyclerTouchListener;
+import com.resepmakanan.R;
+import com.resepmakanan.adapter.AdapterJenisMakanan;
+import com.resepmakanan.model.Kategori;
+import com.resepmakanan.other.RecyclerTouchListener;
 
 public class JenisMakanan extends AppCompatActivity {
     private AdapterJenisMakanan mAdapterJenisMakanan;

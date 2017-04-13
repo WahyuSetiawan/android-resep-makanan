@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.wahyu.androidresepjamu.activity.DetailMakanan">
+    tools:context=".activity.DetailMakanan">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -16,7 +16,6 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -48,6 +47,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:srcCompat="@drawable/ic_favorite" />
 
 </android.support.design.widget.CoordinatorLayout>

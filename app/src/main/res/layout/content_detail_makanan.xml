@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.wahyu.androidresepjamu.activity.DetailMakanan"
+    tools:context=".activity.DetailMakanan"
     tools:showIn="@layout/activity_detail_makanan">
 
     <ScrollView
@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,9 +41,22 @@
 
             </RelativeLayout>
 
-            <View
-                android:id="@+id/view5"
-                style="@style/Divider" />
+            <View style="@style/Divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/fotoresep"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/text_margin" />
+
+            </RelativeLayout>
+
+            <View style="@style/Divider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -70,7 +83,6 @@
             </RelativeLayout>
 
             <View
-                android:id="@+id/view3"
                 style="@style/Divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -100,7 +112,6 @@
             </RelativeLayout>
 
             <View
-                android:id="@+id/view4"
                 style="@style/Divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

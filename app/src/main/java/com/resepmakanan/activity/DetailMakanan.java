@@ -1,4 +1,4 @@
-package com.example.wahyu.androidresepjamu.activity;
+package com.resepmakanan.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.database.MakananOpenHelper;
-import com.example.wahyu.androidresepjamu.model.Makanan;
+import com.resepmakanan.R;
+import com.resepmakanan.database.MakananOpenHelper;
+import com.resepmakanan.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;
 
@@ -29,7 +29,7 @@ public class DetailMakanan extends AppCompatActivity {
             mTextAlat,
             mTextBahan,
             mTextLangkah;
-    private ImageView mImageTitle;
+    private ImageView mImageTitle, mImageResep;
 
     private MakananOpenHelper mMakananOpenHelper;
     private Makanan mMakanan;
@@ -71,6 +71,7 @@ public class DetailMakanan extends AppCompatActivity {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
                         mImageTitle.setImageBitmap(bitmap);
+                        mImageResep.setImageBitmap(bitmap);
                     }
 
                     @Override
@@ -101,11 +102,11 @@ public class DetailMakanan extends AppCompatActivity {
                                 })
                                 .show();
                     } else {
-                        Snackbar.make(view, "Menghilangkan favorite dari resep", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(view, "Menghilangkan ic_favorite dari resep", Snackbar.LENGTH_SHORT)
                                 .show();
                     }
                 } else {
-                    Snackbar.make(view, "Gagal mengubah favorite", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, "Gagal mengubah ic_favorite", Snackbar.LENGTH_SHORT)
                             .setAction("Ok", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -125,6 +126,7 @@ public class DetailMakanan extends AppCompatActivity {
         mTextBahan = (TextView) findViewById(R.id.text_bahan_makanan);
         mTextLangkah = (TextView) findViewById(R.id.text_langkah_memasak);
         mImageTitle = (ImageView) findViewById(R.id.image_detail);
+        mImageResep = (ImageView) findViewById(R.id.fotoresep);
     }
 
     private void setupDatabase() {
@@ -136,7 +138,6 @@ public class DetailMakanan extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     private void hapus() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

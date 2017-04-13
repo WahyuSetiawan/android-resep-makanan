@@ -1,4 +1,4 @@
-package com.example.wahyu.androidresepjamu.model;
+package com.resepmakanan.model;
 
 /**
  * Created by wahyu on 4/7/2017.

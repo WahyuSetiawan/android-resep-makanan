@@ -1,4 +1,4 @@
-package com.example.wahyu.androidresepjamu.activity;
+package com.resepmakanan.activity;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
@@ -7,24 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.wahyu.androidresepjamu.R;
-import com.example.wahyu.androidresepjamu.adapter.AdapterDaftarMakanan;
-import com.example.wahyu.androidresepjamu.database.MakananOpenHelper;
-import com.example.wahyu.androidresepjamu.model.Kategori;
-import com.example.wahyu.androidresepjamu.model.Makanan;
-import com.example.wahyu.androidresepjamu.other.DividerItemDecoration;
-import com.example.wahyu.androidresepjamu.other.RecyclerTouchListener;
+import com.resepmakanan.R;
+import com.resepmakanan.adapter.AdapterDaftarMakanan;
+import com.resepmakanan.database.MakananOpenHelper;
+import com.resepmakanan.model.Makanan;
+import com.resepmakanan.other.DividerItemDecoration;
+import com.resepmakanan.other.RecyclerTouchListener;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import static com.example.wahyu.androidresepjamu.R.id.recycler_daftar_makanan;
-import static com.example.wahyu.androidresepjamu.R.id.text_notifikasi;
+import static com.resepmakanan.R.id.recycler_daftar_makanan;
+import static com.resepmakanan.R.id.text_notifikasi;
 
 public class DaftarMakanan extends AppCompatActivity {
     private RecyclerView mRecyclerMakanan;
@@ -87,11 +86,19 @@ public class DaftarMakanan extends AppCompatActivity {
         if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)) != null) {
             String kategori = getIntent().getStringExtra(getString(R.string.put_extra_kategori));
 
-            setTitle(kategori);
+            setTitle(StringUtils.capitalize(kategori));
 
             mListMakanan = mMakananOpenHelper.selectAllFromKategori(kategori);
 
             keterangan = "Tidak tedapat data " + kategori;
+        }
+
+        if (getIntent().getStringExtra(getString(R.string.put_extra_favorite)) != null) {
+            setTitle(StringUtils.capitalize("Favorite"));
+
+            mListMakanan = mMakananOpenHelper.selectAllFavorite();
+
+            keterangan = "Tidak resep Favorite";
         }
 
         if (mListMakanan.size() == 0) {
@@ -148,7 +155,7 @@ public class DaftarMakanan extends AppCompatActivity {
                 Snackbar.make(mCoordinatorLayout, "", Snackbar.LENGTH_SHORT).show();
             }
 
-            if (resultCode == getResources().getInteger(R.integer.return_edit_data)){
+            if (resultCode == getResources().getInteger(R.integer.return_edit_data)) {
                 String idData = data.getStringExtra(getString(R.string.put_extra_detail));
                 String position = data.getStringExtra(getString(R.string.put_extra_detail_postition));
                 Makanan makanan = mMakananOpenHelper.select(idData);

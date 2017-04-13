@@ -1,4 +1,4 @@
-package com.example.wahyu.androidresepjamu.other;
+package com.resepmakanan.other;
 
 import android.content.Context;
 import android.content.res.TypedArray;

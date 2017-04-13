@@ -1,13 +1,10 @@
-package com.example.wahyu.androidresepjamu.other;
+package com.resepmakanan.other;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ActionProvider;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.example.wahyu.androidresepjamu.activity.DaftarMakanan;
 
 
 public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {

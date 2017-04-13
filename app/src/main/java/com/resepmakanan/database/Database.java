@@ -1,18 +1,15 @@
-package com.example.wahyu.androidresepjamu.database;
+package com.resepmakanan.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by wahyu on 4/7/2017.
  */
 
 public abstract class Database extends SQLiteOpenHelper {
-    static final int DATABASE_VERSION = 5;
+    static final int DATABASE_VERSION = 7;
     static final String DATABASE_NAME = "databaseresepmakanan";
 
     public Database(Context context) {
