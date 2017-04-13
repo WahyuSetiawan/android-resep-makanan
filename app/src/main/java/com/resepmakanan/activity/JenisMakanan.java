@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.resepmakanan.R;
 import com.resepmakanan.adapter.AdapterJenisMakanan;
-import com.resepmakanan.model.Kategori;
+import com.resepmakanan.publicvariable.Kategori;
 import com.resepmakanan.other.RecyclerTouchListener;
 
 public class JenisMakanan extends AppCompatActivity {

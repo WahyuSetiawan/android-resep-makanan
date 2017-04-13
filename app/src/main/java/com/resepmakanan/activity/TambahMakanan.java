@@ -17,7 +17,7 @@ import android.widget.Spinner;
 
 import com.resepmakanan.R;
 import com.resepmakanan.database.MakananOpenHelper;
-import com.resepmakanan.model.Kategori;
+import com.resepmakanan.publicvariable.Kategori;
 import com.resepmakanan.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;

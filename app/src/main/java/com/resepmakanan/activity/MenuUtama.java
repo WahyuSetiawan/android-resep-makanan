@@ -1,10 +1,12 @@
 package com.resepmakanan.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 
 import com.resepmakanan.R;
 import com.resepmakanan.database.MakananOpenHelper;
-import com.resepmakanan.model.Kategori;
+import com.resepmakanan.publicvariable.Kategori;
 import com.resepmakanan.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;
@@ -35,7 +37,7 @@ public class MenuUtama extends AppCompatActivity
 
     private Toolbar mToolbar;
     private CarouselView mCarouselView;
-    private Button mButtonMenu, mButtonInfo;
+    private Button mButtonMenu, mButtonInfo, mButtonKeluar;
     private CoordinatorLayout mCoordinatorLayout;
 
     private MakananOpenHelper mMakananOpenHelper;
@@ -63,11 +65,13 @@ public class MenuUtama extends AppCompatActivity
 
         mButtonMenu = (Button) findViewById(R.id.menu_utama_menu);
         mButtonInfo = (Button) findViewById(R.id.menu_utama_info);
+        mButtonKeluar = (Button) findViewById(R.id.menu_utama_keluar);
     }
 
     private void setupData() {
         mButtonInfo.setOnClickListener(mListenerInfo);
         mButtonMenu.setOnClickListener(mListenerMenu);
+        mButtonKeluar.setOnClickListener(mListenerKeluar);
 
         final ArrayList<Makanan> mMakanans = mMakananOpenHelper.selectAllFavorite();
 
@@ -159,6 +163,28 @@ public class MenuUtama extends AppCompatActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
     }
+
+    private View.OnClickListener mListenerKeluar = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuUtama.this);
+            builder.setTitle("Konfirmasi");
+            builder.setMessage("Anda yakin keluar?");
+            builder.setNegativeButton("Ya", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.setPositiveButton("Tidak", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.create().show();
+        }
+    };
 
     private View.OnClickListener mListenerMenu = new View.OnClickListener() {
         @Override

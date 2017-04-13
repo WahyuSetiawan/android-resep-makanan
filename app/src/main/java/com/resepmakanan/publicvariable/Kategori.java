@@ -1,4 +1,4 @@
-package com.resepmakanan.model;
+package com.resepmakanan.publicvariable;
 
 /**
  * Created by wahyu on 4/9/2017.

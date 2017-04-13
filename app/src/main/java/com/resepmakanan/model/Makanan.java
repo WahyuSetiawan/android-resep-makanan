@@ -1,5 +1,7 @@
 package com.resepmakanan.model;
 
+import com.resepmakanan.publicvariable.Kategori;
+
 /**
  * Created by wahyu on 4/7/2017.
  */

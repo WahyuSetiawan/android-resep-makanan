@@ -8,7 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.resepmakanan.R;
-import com.resepmakanan.model.Kategori;
+import com.resepmakanan.publicvariable.GambarKategori;
+import com.resepmakanan.publicvariable.Kategori;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +29,8 @@ public class AdapterJenisMakanan extends RecyclerView.Adapter<AdapterJenisMakana
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(StringUtils.capitalize(Kategori.values()[position].toString()));
+        holder.title.setText(StringUtils.capitalize(GambarKategori.values()[position].getNama()));
+        holder.gambar.setImageResource(GambarKategori.values()[position].getImage());
     }
 
     @Override

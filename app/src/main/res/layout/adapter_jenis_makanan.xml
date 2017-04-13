@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
+                android:scaleType="centerCrop"
                 android:layout_alignParentTop="true"
                 card_view:srcCompat="@drawable/side_nav_bar" />
 
