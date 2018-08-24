@@ -3,6 +3,7 @@ package com.resepmakanan.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,27 +12,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.resepmakanan.R;
+import com.resepmakanan.database.CostumDaoMaster;
+import com.resepmakanan.model.Kategori;
+import com.resepmakanan.model.KategoriDao;
 import com.resepmakanan.model.Makanan;
 import com.nekoloop.base64image.Base64Image;
 import com.nekoloop.base64image.RequestDecode;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by wahyu on 4/6/2017.
  */
 
 public class AdapterDaftarMakanan extends RecyclerView.Adapter<AdapterDaftarMakanan.ViewAdapterMakanan> {
-    public ArrayList<Makanan> makanans = new ArrayList<>();
+    public List<Makanan> makanans = new ArrayList<>();
     Context context;
 
     public AdapterDaftarMakanan(Context context) {
         this.context = context;
     }
 
-    public void setMakanans(ArrayList<Makanan> makanans) {
+    public void setMakanans(List<Makanan> makanans) {
         this.makanans = makanans;
     }
 
@@ -42,29 +52,27 @@ public class AdapterDaftarMakanan extends RecyclerView.Adapter<AdapterDaftarMaka
 
     @Override
     public void onBindViewHolder(final ViewAdapterMakanan holder, int position) {
-        System.out.println("asdfasdf");
-
         final Makanan makanan = makanans.get(position);
 
-        Base64Image.with(context).decode(makanan.getGambar()).into(new RequestDecode.Decode() {
-            @Override
-            public void onSuccess(Bitmap bitmap) {
-                holder.image.setImageBitmap(bitmap);
-                holder.title.setText(StringUtils.capitalize(makanan.getNama()));
-                holder.description.setText(StringUtils.capitalize(makanan.getKategori().toString()));
+        File img = new File(makanan.getGambar());
+        if (img.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(img.getAbsolutePath());
+            holder.image.setImageBitmap(bitmap);
+        }
 
-                if (makanan.getFavorite() > 0) {
-                    holder.favorite.setVisibility(View.VISIBLE);
-                } else {
-                    holder.favorite.setVisibility(View.GONE);
-                }
-            }
+        holder.title.setText(StringUtils.capitalize(makanan.getJudul()));
+        holder.description.setText(StringUtils.capitalize(makanan.getKategori().getJudul()));
 
-            @Override
-            public void onFailure() {
+        Kategori kategori = CostumDaoMaster.getSession(this.context).getKategoriDao().queryBuilder().where(KategoriDao.Properties.Id.eq(makanan.getId_kategori())).unique();
+        Kategori kategori1 = CostumDaoMaster.getSession(this.context).getKategoriDao().queryBuilder().where(KategoriDao.Properties.Id.eq(kategori.getJenis())).unique();
 
-            }
-        });
+        holder.icon.setImageBitmap(BitmapFactory.decodeFile(kategori1.getIcon()));
+
+        if (makanan.getFavorite() > 0) {
+            holder.favorite.setVisibility(View.VISIBLE);
+        } else {
+            holder.favorite.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -84,20 +92,22 @@ public class AdapterDaftarMakanan extends RecyclerView.Adapter<AdapterDaftarMaka
     }
 
     public static class ViewAdapterMakanan extends RecyclerView.ViewHolder {
+        @BindView(R.id.imageresep)
         public ImageView image;
+        @BindView(R.id.favorite)
         public ImageView favorite;
+        @BindView(R.id.title)
         public TextView title;
+        @BindView(R.id.description)
         public TextView description;
+        @BindView(R.id.icon)
+        ImageView icon;
         public View view;
 
         public ViewAdapterMakanan(View itemView) {
             super(itemView);
-
+            ButterKnife.bind(this, itemView);
             view = itemView;
-            image = (ImageView) itemView.findViewById(R.id.imageresep);
-            title = (TextView) itemView.findViewById(R.id.title);
-            description = (TextView) itemView.findViewById(R.id.description);
-            favorite = (ImageView) itemView.findViewById(R.id.favorite);
         }
     }
 }

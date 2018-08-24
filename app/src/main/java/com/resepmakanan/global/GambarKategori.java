@@ -1,4 +1,4 @@
-package com.resepmakanan.publicvariable;
+package com.resepmakanan.global;
 
 import com.resepmakanan.R;
 
@@ -14,7 +14,7 @@ public enum GambarKategori {
     private String nama;
     private int image;
 
-    private GambarKategori(String nama, int drawable) {
+    GambarKategori(String nama, int drawable) {
         this.nama = nama;
         this.image = drawable;
     }

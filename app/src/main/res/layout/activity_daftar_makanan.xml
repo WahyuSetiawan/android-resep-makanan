@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.DaftarMakanan">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-
         </android.support.v7.widget.RecyclerView>
 
         <TextView
@@ -30,6 +28,4 @@
             android:text="Tidak terdapat data makanan"
             android:visibility="visible" />
     </RelativeLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="10dp"
     tools:context=".activity.TambahMakanan">
 
     <ScrollView
@@ -16,190 +17,147 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
+            <!-- Todo: -->
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    style="@style/AppTheme.layout.card"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" android:elevation="4dp"
+                        app:cardCornerRadius="8dp">
+
+                        <ImageButton
+                            android:id="@+id/gambarresep"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:background="@drawable/ic_photo_camera"
+                            android:scaleType="centerInside" />
+                    </android.support.v7.widget.CardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/gambarresep"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
                         android:maxLines="4"
                         android:text="Tekan Gambar untuk menambahkan gambar pada resep"
                         android:textSize="12dp" />
+                </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/gambarresep"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/ic_photo_camera" />
-                </RelativeLayout>
-
-
-                <View style="@style/Divider"></View>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp">
+                <android.support.v7.widget.CardView
+                    style="@style/AppTheme.layout.card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <android.support.design.widget.TextInputLayout
+                        style="@style/AppTheme.layout.input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/judulresep"
+                            style="@style/AppTheme.input.text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Judul Resep"
-                            android:textSize="12dp" />
+                            android:hint="Judul Resep" />
                     </android.support.design.widget.TextInputLayout>
+                </android.support.v7.widget.CardView>
 
-                </RelativeLayout>
-
-
-                <View style="@style/Divider"></View>
-
-                <RelativeLayout
+                <android.support.v7.widget.CardView
+                    style="@style/AppTheme.layout.card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/labelkategori"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="12dp"
-                        android:text="Pilih kategori resep yang kamu buat" />
-
-                    <Spinner
-                        android:id="@+id/kategori"
+                    <LinearLayout
+                        style="@style/AppTheme.layout.input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/labelkategori"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:layout_marginTop="10dp">
+                        android:orientation="vertical">
 
-                    </Spinner>
-                </RelativeLayout>
-
-                <View style="@style/Divider"></View>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/labelalat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Alat yang digunakan"
-                        android:textSize="12dp" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/labelalat">
-
-                        <EditText
-                            android:id="@+id/alat"
-                            android:layout_width="fill_parent"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="100"
+                            android:layout_marginBottom="5dp"
+                            android:text="Pilih kategori resep yang kamu buat"
+                            android:textAlignment="center"
                             android:textSize="12dp" />
-                    </android.support.design.widget.TextInputLayout>
-                </RelativeLayout>
 
+                        <Spinner
+                            android:id="@+id/kategori"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                <View style="@style/Divider"></View>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
+                <android.support.v7.widget.CardView
+                    style="@style/AppTheme.layout.card"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/labelbahan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Bahan yang digunakan"
-                        android:textSize="12dp" />
-
                     <android.support.design.widget.TextInputLayout
+                        style="@style/AppTheme.layout.input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/labelbahan">
 
                         <EditText
                             android:id="@+id/bahan"
+                            style="@style/AppTheme.input.text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="100"
-                            android:textSize="12dp" />
+                            android:hint="Bahan makanan"
+                            android:minHeight="90dp" />
                     </android.support.design.widget.TextInputLayout>
-                </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
-
-                <View style="@style/Divider"></View>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
+                <android.support.v7.widget.CardView
+                    style="@style/AppTheme.layout.card"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/labelcarapembuatan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Cara pembuatan yang digunakan"
-                        android:textSize="12dp" />
-
                     <android.support.design.widget.TextInputLayout
+                        style="@style/AppTheme.layout.input"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/labelcarapembuatan">
+                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/langkah"
+                            style="@style/AppTheme.input.text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="100"
-                            android:textSize="12dp" />
+                            android:hint="Cara pembuatan"
+                            android:minHeight="90dp" />
                     </android.support.design.widget.TextInputLayout>
-                </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
-            <View style="@style/Divider"></View>
-
-            <Button
-                android:id="@+id/simpan"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Simpan"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/simpan"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="171dp"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

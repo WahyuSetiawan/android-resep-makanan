@@ -2,20 +2,39 @@ package com.resepmakanan.activity;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.resepmakanan.R;
 
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class Info extends AppCompatActivity {
+    @BindView(R.id.nama_profile) TextView namaProfile;
+    @BindView(R.id.nim_profile) TextView nimProfile;
+    @BindView(R.id.image_app)
+    ImageView imageApp;
+    @BindView(R.id.nama)
+    TextView nama;
+    @BindView(R.id.description)
+    TextView description;
+    @BindView(R.id.version)
+    TextView version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        ButterKnife.bind(this);
 
         setupComponent();
     }
@@ -24,21 +43,21 @@ public class Info extends AppCompatActivity {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0) ;
 
-            ((TextView) findViewById(R.id.nama)).setText(getString(R.string.app_name));
-            ((TextView) findViewById(R.id.description)).setText(getString(R.string.app_description));
-            ((TextView) findViewById(R.id.version)).setText("Version " + info.versionName);
+            nama.setText(getString(R.string.app_name));
+            description.setText(getString(R.string.app_description));
+            version.setText("Version " + info.versionName);
+
+            namaProfile.setText("NAMA: WAHYU SETYAWAN");
+            nimProfile.setText("NPM.  : 1171065082");
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
-
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @OnClick(R.id.back)
+    public void backClick(){
+        finish();
     }
 
     @Override

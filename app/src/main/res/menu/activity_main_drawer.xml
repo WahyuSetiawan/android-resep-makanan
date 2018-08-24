@@ -9,19 +9,25 @@
         <item
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_menu_favorite_heart_button"
-            android:title="Favorite"/>
-        <item
-            android:id="@+id/nav_makanan"
-            android:icon="@drawable/ic_menu_dinner"
-            android:title="Makanan" />
-        <item
-            android:id="@+id/nav_minuman"
-            android:icon="@drawable/ic_menu_cocktail_glass"
-            android:title="Minuman" />
-        <item
-            android:id="@+id/nav_kue"
-            android:icon="@drawable/ic_menu_biscuit"
-            android:title="Kue" />
+            android:title="Favorite" />
     </group>
+    <item
+        android:id="@+id/group_jenis_makanan"
+        android:title="Jenis Makanan">
+        <menu>
+            <group>
+
+            </group>
+        </menu>
+    </item>
+    <item android:title="Information">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_info"
+                    android:title="Info" />
+            </group>
+        </menu>
+    </item>
 
 </menu>

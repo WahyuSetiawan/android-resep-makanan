@@ -7,15 +7,20 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail_makanan">DetailMakanan</string>
     <string name="put_extra_kategori">put_extra_kategori</string>
+
+    <string name="database_kategori_id">id</string>
+    <string name="database_kategori_judul">judul</string>
+
     <string name="database_resep_judul">judul</string>
     <string name="database_resep_gambar">gambar</string>
     <string name="database_resep_alat">alat</string>
     <string name="database_resep_bahan">bahan</string>
     <string name="database_resep_langkah">langkah</string>
-    <string name="database_resep_kategori">kategori</string>
+    <string name="database_resep_kategori">id_kategori</string>
     <string name="database_resep_table">resep</string>
     <string name="database_resep_id">id</string>
     <string name="database_resep_favorite">favorite</string>
+
     <string name="put_extra_detail">android_detail_id</string>
     <string name="action_detail_edit">Ubah</string>
     <string name="action_detail_delete">Hapus</string>
@@ -26,6 +31,8 @@
     <string name="put_extra_status">status</string>
     <string name="app_description">Aplikasi pencatat resep makanan</string>
     <string name="put_extra_favorite">favorite</string>
+    <string name="database_kategori_gambar">gambar</string>
+    <string name="database_kategori_table">kategori</string>
     <string-array name="spinner_kategori_tambah_resep">
         <item>MAKANAN</item>
         <item>MINUMAN</item>

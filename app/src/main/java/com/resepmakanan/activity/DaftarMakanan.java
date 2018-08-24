@@ -1,6 +1,7 @@
 package com.resepmakanan.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,41 +14,47 @@ import android.widget.TextView;
 
 import com.resepmakanan.R;
 import com.resepmakanan.adapter.AdapterDaftarMakanan;
-import com.resepmakanan.database.MakananOpenHelper;
+import com.resepmakanan.database.CostumDaoMaster;
+import com.resepmakanan.model.DaoSession;
+import com.resepmakanan.model.Kategori;
+import com.resepmakanan.model.KategoriDao;
 import com.resepmakanan.model.Makanan;
+import com.resepmakanan.model.MakananDao;
 import com.resepmakanan.other.DividerItemDecoration;
 import com.resepmakanan.other.RecyclerTouchListener;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.resepmakanan.R.id.coordinator;
 import static com.resepmakanan.R.id.recycler_daftar_makanan;
 import static com.resepmakanan.R.id.text_notifikasi;
 
 public class DaftarMakanan extends AppCompatActivity {
-    private RecyclerView mRecyclerMakanan;
-    private TextView mTextNotifikasi;
-    private CoordinatorLayout mCoordinatorLayout;
+    @BindView(recycler_daftar_makanan)
+    RecyclerView mRecyclerMakanan;
+    @BindView(text_notifikasi)
+    TextView mTextNotifikasi;
+    @BindView(coordinator)
+    CoordinatorLayout mCoordinatorLayout;
 
     private AdapterDaftarMakanan mAdapterRecycler;
 
-    private MakananOpenHelper mMakananOpenHelper;
-    ArrayList<Makanan> mListMakanan = null;
+    List<Makanan> mListMakanan = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar_makanan);
-
-        setupDatabase();
+        ButterKnife.bind(this);
 
         setupToolbar();
-
-        setupComponent();
-
         setupAdapter();
-
         setupData();
     }
 
@@ -56,7 +63,7 @@ public class DaftarMakanan extends AppCompatActivity {
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mAdapterRecycler = new AdapterDaftarMakanan(this);
-        mRecyclerMakanan.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        //mRecyclerMakanan.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerMakanan.setHasFixedSize(true);
 
         mRecyclerMakanan.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerMakanan, new RecyclerTouchListener.ClickListener() {
@@ -83,20 +90,23 @@ public class DaftarMakanan extends AppCompatActivity {
     private void setupData() {
         String keterangan = "";
 
-        if (getIntent().getStringExtra(getString(R.string.put_extra_kategori)) != null) {
-            String kategori = getIntent().getStringExtra(getString(R.string.put_extra_kategori));
+        DaoSession daoSession = CostumDaoMaster.getSession(this);
 
-            setTitle(StringUtils.capitalize(kategori));
+        if (getIntent().getLongExtra(getString(R.string.put_extra_kategori), 0) != 0) {
+            long kategori = getIntent().getLongExtra(getString(R.string.put_extra_kategori),0);
+            Kategori kategori1 = daoSession.getKategoriDao().queryBuilder().where(KategoriDao.Properties.Id.eq(kategori)).unique();
 
-            mListMakanan = mMakananOpenHelper.selectAllFromKategori(kategori);
+            setTitle(StringUtils.capitalize(kategori1.getJudul()));
 
-            keterangan = "Tidak tedapat data " + kategori;
+            mListMakanan = daoSession.getMakananDao().queryBuilder().where(MakananDao.Properties.Id_kategori.eq(kategori)).list();
+
+            keterangan = "Tidak tedapat data " + kategori1.getJudul();
         }
 
         if (getIntent().getStringExtra(getString(R.string.put_extra_favorite)) != null) {
             setTitle(StringUtils.capitalize("Favorite"));
 
-            mListMakanan = mMakananOpenHelper.selectAllFavorite();
+            mListMakanan = daoSession.getMakananDao().queryBuilder().where(MakananDao.Properties.Favorite.eq(1)).list();
 
             keterangan = "Tidak resep Favorite";
         }
@@ -112,17 +122,6 @@ public class DaftarMakanan extends AppCompatActivity {
 
         mAdapterRecycler.setMakanans(mListMakanan);
         mAdapterRecycler.notifyDataSetChanged();
-    }
-
-    private void setupComponent() {
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
-        mRecyclerMakanan = (RecyclerView) findViewById(recycler_daftar_makanan);
-        mTextNotifikasi = (TextView) findViewById(text_notifikasi);
-    }
-
-    private void setupDatabase() {
-        mMakananOpenHelper = new MakananOpenHelper(this);
-
     }
 
     private void setupToolbar() {
@@ -158,7 +157,8 @@ public class DaftarMakanan extends AppCompatActivity {
             if (resultCode == getResources().getInteger(R.integer.return_edit_data)) {
                 String idData = data.getStringExtra(getString(R.string.put_extra_detail));
                 String position = data.getStringExtra(getString(R.string.put_extra_detail_postition));
-                Makanan makanan = mMakananOpenHelper.select(idData);
+
+                Makanan makanan = CostumDaoMaster.getSession(this).getMakananDao().queryBuilder().where(MakananDao.Properties.Id.eq(idData)).unique();
 
                 mAdapterRecycler.edit(Integer.parseInt(position), makanan);
             }

@@ -7,61 +7,97 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.resepmakanan.R;
 import com.resepmakanan.adapter.AdapterJenisMakanan;
-import com.resepmakanan.publicvariable.Kategori;
+import com.resepmakanan.database.CostumDaoMaster;
+import com.resepmakanan.global.KategoriEnum;
+import com.resepmakanan.model.Kategori;
+import com.resepmakanan.model.KategoriDao;
 import com.resepmakanan.other.RecyclerTouchListener;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class JenisMakanan extends AppCompatActivity {
     private AdapterJenisMakanan mAdapterJenisMakanan;
+    private List<Kategori> kategoris;
 
-    private RecyclerView mRecyclerJenisMakanan;
+    @BindView(R.id.jenis_makanan_activity)
+    RecyclerView mRecyclerJenisMakanan;
+    private String TAG = JenisMakanan.class.getSimpleName();
+    private boolean root = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jenis_makanan);
+        ButterKnife.bind(this);
 
-        setupDatabase();
+        setTitle("Jenis Makanan");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupComponent();
-
-        setupToolbar();
-    }
-
-    private void setupDatabase() {
-
     }
 
     private void setupComponent() {
-        mRecyclerJenisMakanan = (RecyclerView) findViewById(R.id.jenis_makanan_activity);
+        LinearLayoutManager mLayourManagerRecycler = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        LinearLayoutManager mLayourManagerRecycler = new LinearLayoutManager(this);
-        mLayourManagerRecycler.setOrientation(LinearLayoutManager.VERTICAL);
+        root = this.getIntent().getIntExtra(getString(R.string.put_extra_kategori),-1)<=0;
+        kategoris = CostumDaoMaster.getSession(this).getKategoriDao().queryBuilder()
+                .where(KategoriDao.Properties.Jenis.eq(this.getIntent().getIntExtra(getString(R.string.put_extra_kategori), 0)))
+                .list();
 
-        mAdapterJenisMakanan = new AdapterJenisMakanan();
+        mAdapterJenisMakanan = new AdapterJenisMakanan(kategoris);
 
         mRecyclerJenisMakanan.setLayoutManager(mLayourManagerRecycler);
         mRecyclerJenisMakanan.setAdapter(mAdapterJenisMakanan);
-        mRecyclerJenisMakanan.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerJenisMakanan, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int posititon) {
-                Intent intent = new Intent(JenisMakanan.this, DaftarMakanan.class);
-                intent.putExtra(getString(R.string.put_extra_kategori), Kategori.values()[posititon].toString());
-                JenisMakanan.this.startActivityForResult(intent, getResources().getInteger(R.integer.daftar_makanan));
-            }
 
-            @Override
-            public void onLongClick(View view, int position) {
+        mRecyclerJenisMakanan.addOnItemTouchListener(
+                new RecyclerTouchListener(getApplicationContext(),
+                        mRecyclerJenisMakanan,
+                        new RecyclerTouchListener.ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                if (root) {
+                                    kategoris =  CostumDaoMaster.getSession(JenisMakanan.this).getKategoriDao().queryBuilder()
+                                            .where(KategoriDao.Properties.Jenis.eq(kategoris.get(position).getId()))
+                                            .list();
 
-            }
-        }));
+                                    mAdapterJenisMakanan.setKategoris(kategoris);
+
+                                    root = !root;
+                                } else {
+                                    Intent intent = new Intent(JenisMakanan.this, DaftarMakanan.class);
+                                    intent.putExtra(getString(R.string.put_extra_kategori), kategoris.get(position).getId());
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void onLongClick(View view, int position) {
+
+                            }
+                        }));
     }
 
-    private void setupToolbar() {
-        setTitle("Jenis Makanan");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @Override
+    public void onBackPressed() {
+        if (!root) {
+            kategoris =  CostumDaoMaster.getSession(JenisMakanan.this).getKategoriDao().queryBuilder()
+                    .where(KategoriDao.Properties.Jenis.eq(0))
+                    .list();
+
+            mAdapterJenisMakanan.setKategoris(kategoris);
+
+            root = !root;
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override

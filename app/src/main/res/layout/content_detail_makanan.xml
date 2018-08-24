@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="15dp"
+    android:paddingEnd="15dp"
+    android:paddingStart="15dp"
+    android:paddingTop="15dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.DetailMakanan"
     tools:showIn="@layout/activity_detail_makanan">
@@ -17,29 +21,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_label_nama_resep"
+                    style="@style/AppTheme.layout.title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_margin"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:capitalize="sentences"
-                    android:text="Nama Resep"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="Nama Resep" />
 
                 <TextView
                     android:id="@+id/text_nama_resep"
+                    style="@style/AppTheme.layout.text.content"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_label_nama_resep"
-                    android:layout_margin="@dimen/text_margin" />
-
-            </RelativeLayout>
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <View style="@style/Divider" />
 
@@ -47,98 +46,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/fotoresep"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/text_margin" />
+                    app:cardCornerRadius="10dp">
 
+                    <ImageView
+                        android:id="@+id/fotoresep"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxHeight="70dp"
+                        android:scaleType="centerCrop" />
+                </android.support.v7.widget.CardView>
             </RelativeLayout>
 
             <View style="@style/Divider" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/label_alat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_margin"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:capitalize="sentences"
-                    android:text="Alat "
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_alat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/label_alat"
-                    android:layout_margin="@dimen/text_margin" />
-
-            </RelativeLayout>
-
-            <View
-                style="@style/Divider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/label_bahan"
+                    style="@style/AppTheme.layout.title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_margin"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:capitalize="sentences"
-                    android:text="Bahan Makanan"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="Bahan Makanan" />
 
                 <TextView
                     android:id="@+id/text_bahan_makanan"
+                    style="@style/AppTheme.layout.text.content"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/label_bahan"
-                    android:layout_margin="@dimen/text_margin" />
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-            </RelativeLayout>
+            <View style="@style/Divider" />
 
-            <View
-                style="@style/Divider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/label_langkah_memasak"
+                    style="@style/AppTheme.layout.title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_margin"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:capitalize="sentences"
-                    android:text="Langkah Memasak"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:text="Langkah Memasak" />
 
                 <TextView
                     android:id="@+id/text_langkah_memasak"
+                    style="@style/AppTheme.layout.text.content"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/label_langkah_memasak"
-                    android:layout_margin="@dimen/text_margin" />
-            </RelativeLayout>
-
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </android.support.v4.widget.NestedScrollView>
