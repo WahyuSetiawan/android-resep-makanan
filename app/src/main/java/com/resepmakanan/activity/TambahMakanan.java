@@ -2,6 +2,7 @@ package com.resepmakanan.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,6 +94,7 @@ public class TambahMakanan extends AppCompatActivity {
         mAdapterSpinner = new ApaterSpinner(this, android.R.layout.simple_spinner_item, kategoris);
         mAdapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerKategori.setAdapter(mAdapterSpinner);
+        makanan = new Makanan();
 
         if (getIntent().getStringExtra(getString(R.string.put_extra_tambah_makanan)) != null) {
             String id = getIntent().getStringExtra(getString(R.string.put_extra_tambah_makanan_id));
@@ -141,9 +144,6 @@ public class TambahMakanan extends AppCompatActivity {
         if (validation()) {
             String filename = storeCameraPhotoInSDCard(((BitmapDrawable) mImageResep.getDrawable()).getBitmap(), currentDateFormat());
 
-            Toast.makeText(this, ""+makanan.getId(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, ""+edit, Toast.LENGTH_SHORT).show();
-
             makanan.setJudul(mTextJudulResep.getText().toString());
             makanan.setGambar(filename);
             makanan.setBahan(mTextBahan.getText().toString());
@@ -157,7 +157,28 @@ public class TambahMakanan extends AppCompatActivity {
                     CostumDaoMaster.getSession(TambahMakanan.this).getMakananDao().update(makanan);
                 }
 
-                Snackbar.make(mConstarintLayout, "Penyimpanan Berhasil", Snackbar.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(TambahMakanan.this);
+                builder.setTitle("Notification");
+                builder.setMessage("Penyimpanan anda berhasil");
+
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        onBackPressed();
+                    }
+                });
+
+                String positiveText = getString(android.R.string.ok);
+                builder.setPositiveButton(positiveText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                onBackPressed();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             } catch (SQLiteConstraintException e) {
                 Log.e(TambahMakanan.class.getSimpleName(), "onClick: " + e.getMessage());
                 Snackbar.make(mConstarintLayout, "Gagal menyimpan data makanan", Snackbar.LENGTH_SHORT).show();

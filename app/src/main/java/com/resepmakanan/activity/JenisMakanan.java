@@ -28,7 +28,7 @@ public class JenisMakanan extends AppCompatActivity {
 
     @BindView(R.id.jenis_makanan_activity)
     RecyclerView mRecyclerJenisMakanan;
-    private String TAG = JenisMakanan.class.getSimpleName();
+
     private boolean root = true;
 
     @Override

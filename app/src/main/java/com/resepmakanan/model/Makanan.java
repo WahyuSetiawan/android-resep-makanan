@@ -15,7 +15,7 @@ import org.greenrobot.greendao.DaoException;
 @Entity
 public class Makanan {
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
 
     private String judul;
     private String gambar;
@@ -54,8 +54,20 @@ public class Makanan {
         this.kategori = kategori;
     }
 
-    @Generated(hash = 1260837860)
-    public Makanan(long id, String judul, String gambar, String langkah, String bahan, long id_kategori,
+   
+    public Makanan(Long id, String judul, String gambar, String langkah, String bahan, Long id_kategori,
+            int favorite) {
+        this.id = id;
+        this.judul = judul;
+        this.gambar = gambar;
+        this.langkah = langkah;
+        this.bahan = bahan;
+        this.id_kategori = id_kategori;
+        this.favorite = favorite;
+    }
+
+    @Generated(hash = 1503015454)
+    public Makanan(Long id, String judul, String gambar, String langkah, String bahan, long id_kategori,
             int favorite) {
         this.id = id;
         this.judul = judul;
@@ -76,12 +88,12 @@ public class Makanan {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -186,18 +198,18 @@ public class Makanan {
     }
 
 
-    public long getId_kategori() {
+    public Long getId_kategori() {
         return this.id_kategori;
     }
 
-    public void setId_kategori(long id_kategori) {
+    public void setId_kategori(Long id_kategori) {
         this.id_kategori = id_kategori;
     }
 
     /** To-one relationship, resolved on first access. */
     @Keep
     public Kategori getKategori() {
-        long __key = this.id_kategori;
+        Long __key = this.id_kategori;
 
         if (kategori !=null){
             return kategori;
@@ -216,6 +228,10 @@ public class Makanan {
             }
         }
         return kategori;
+    }
+
+    public void setId_kategori(long id_kategori) {
+        this.id_kategori = id_kategori;
     }
 
     /** called by internal mechanisms, do not call yourself. */
